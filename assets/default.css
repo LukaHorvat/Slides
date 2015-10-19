@@ -1,0 +1,16 @@
+body {
+    margin: 2cm;
+    font-family: 'Segoe UI', Arial, freesans, sans-serif;
+    font-size: 300%;
+    color: #333;
+}
+h1 {
+    border-bottom: solid 1px lightgray;
+}
+svg {
+    margin: auto;
+    display: block;
+}
+.slide {
+    page-break-after: always;
+}
