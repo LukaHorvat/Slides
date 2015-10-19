@@ -2,6 +2,7 @@
 
 module Main where
 import Slides.Presentation
+import Slides.Common
 import qualified System.IO.UTF8 as UTF8
 import Diagrams.Opis
 import Diagrams.JednaTocka
