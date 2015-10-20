@@ -10,6 +10,10 @@ category:            Graphics
 build-type:          Simple
 cabal-version:       >=1.10
 
+source-repository head
+  type:              git
+  location:          https://github.com/LukaHorvat/Slides.git
+
 library
   exposed-modules:     Slides.Presentation
                      , Slides.Common
