@@ -1,6 +1,6 @@
 {-# LANGUAGE RecordWildCards, OverloadedStrings #-}
 module Slides.Presentation
-    ( render, writeToFile, module Slides.Common
+    ( renderPresentation, writeToFile, module Slides.Common
     ) where
 
 import Data.Colour (Colour)
@@ -54,5 +54,10 @@ inlineMarkdown = Text . Regex.gsubRegexPR "\\*(.+?)\\*" "<i>\\1</i>"
 instance IsString ContentNode where
     fromString = inlineMarkdown
 
+-- | Render the Presentation to a HTML string.
+renderPresentation :: Presentation -> String
+renderPresentation = render
+
+-- | Render a Presentation to a HTML file with UTF8 encoding.
 writeToFile :: FilePath -> Presentation -> IO ()
 writeToFile path = UTF8.writeFile path . render
