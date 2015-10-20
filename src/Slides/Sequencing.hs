@@ -2,6 +2,7 @@
 module Slides.Sequencing where
 
 import Slides.Common
+import Slides.Internal
 
 data StepF a = Step Eagerness a deriving (Functor, Show)
 type Step = StepF String

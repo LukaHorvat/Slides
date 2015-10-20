@@ -1,5 +1,7 @@
 {-# LANGUAGE RecordWildCards, OverloadedStrings #-}
-module Slides.Presentation where
+module Slides.Presentation
+    ( render, writeToFile, module Slides.Common
+    ) where
 
 import Data.Colour (Colour)
 import qualified Data.Colour.SRGB as Colour
@@ -9,6 +11,8 @@ import Data.String (IsString(..))
 import Data.List (groupBy)
 import Slides.Common
 import Slides.Sequencing
+import Slides.Internal
+import qualified System.IO.UTF8 as UTF8
 
 class Renderable a where
     render :: a -> String
@@ -49,3 +53,6 @@ inlineMarkdown = Text . Regex.gsubRegexPR "\\*(.+?)\\*" "<i>\\1</i>"
 
 instance IsString ContentNode where
     fromString = inlineMarkdown
+
+writeToFile :: FilePath -> Presentation -> IO ()
+writeToFile path = UTF8.writeFile path . render
