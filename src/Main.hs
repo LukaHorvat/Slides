@@ -17,7 +17,7 @@ sample =
         slides = [
             Slide [
                 Header 1 "Genetski algoritmi",
-                Header 2 "Križanja",
+                Header 2 "Operatori križanja",
                 Break,
                 Break,
                 Break,
@@ -89,25 +89,24 @@ sample =
             Slide [
                 Header 2 "Prihvatljivost rješenja",
                 Sequence Immediate [
-                    UnfoldConcatList Delay [
-                        Header 3 "Primjer",
-                        UnfoldList Immediate [
-                            "Odabiremo _n_ elemenata iz nekog skupa.",
-                            "Jedan odabir označavamo bit-vektorom gdje jedinica na _i_-tom mjestu \
-                            \signalizira da je _i_-ti element odabran.",
-                            "Broj jedinica mora biti _n_!"
-                        ],
-                        Diagram 200 prihvatljivost
+                    Sequence Immediate [
+                        UnfoldConcatList Delay [
+                            Header 3 "Primjer",
+                            UnfoldList Immediate [
+                                "Odabiremo _n_ elemenata iz nekog skupa.",
+                                "Jedan odabir označavamo bit-vektorom gdje jedinica na _i_-tom mjestu \
+                                \signalizira da je _i_-ti element odabran.",
+                                "Broj jedinica u svakom bit-vektoru mora biti _n_!"
+                            ],
+                            Diagram 200 prihvatljivost
+                        ]
+                    ],
+                    List [
+                        "Konkretan problem često zahtijeva određene uvjete koje potencijalno rješenje \
+                        \mora zadovoljavati.",
+                        "Ako već imamo dva rješenja koja zadovoljavaju uvjet, htjeli bi ih kombinirati \
+                        \tako da njihovo dijete čim lakše dovedemo do zadovoljavajućeg stanja."
                     ]
-                ]
-            ],
-            Slide [
-                Header 2 "Prihvatljivost rješenja",
-                List [
-                    "Konkretan problem često zahtjeva određene uvjete koje potencijalno rješenje \
-                    \mora zadovoljavati.",
-                    "Ako već imamo dva rješenja koja zadovoljavaju uvijet, htjeli bi ih kombinirati \
-                    \tako da njihovo dijete čim lakše dovedemo do zadovoljavajućeg stanja."
                 ]
             ],
             Slide [
@@ -126,8 +125,10 @@ sample =
             ],
             Slide [
                 Header 2 "Reference",
+                Break,
+                Break,
                 List [
-                    "-referenca-"
+                    "_Krunoslav Puljic_: Evolucijski algoritmi za problem usmjeravanja vozila, magistarski rad, 2004."
                 ]
             ]
         ]

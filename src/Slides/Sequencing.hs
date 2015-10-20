@@ -49,5 +49,4 @@ stepsToStrings :: [Step] -> [String]
 stepsToStrings [] = []
 stepsToStrings (Step _ str : Step Delay str2 : ss) = str : stepsToStrings (Step Delay str2 : ss)
 stepsToStrings [Step _ str] = [str]
-stepsToStrings (Step Immediate _ : ss) = stepsToStrings ss
-stepsToStrings (Step Delay str : ss) = str : stepsToStrings ss
+stepsToStrings (Step _ _ : ss) = stepsToStrings ss
