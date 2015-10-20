@@ -37,6 +37,12 @@ sequenceContent (Sequence eager nodes) =
 sequenceContent (List nodes) =
     setEagerness Immediate $ map (fmap (html "ul")) $ mergeSequences sequences
     where sequences = map (simplify . map (fmap (html "li")) . sequenceContent) nodes
+sequenceContent (ConcatList nodes) =
+    setEagerness Immediate $ mergeSequences sequences
+    where sequences = map (simplify . sequenceContent) nodes
+sequenceContent (UnfoldConcatList eager nodes) =
+    setEagerness eager $ mergeSequences sequences
+    where sequences = map (setEagerness Delay . sequenceContent) nodes
 sequenceContent other = [Step Immediate $ renderLeafContent other]
 
 stepsToStrings :: [Step] -> [String]

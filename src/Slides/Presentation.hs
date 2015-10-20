@@ -42,10 +42,10 @@ instance Renderable ElementStyle where
         , fontSize $> \fs -> "font-size: " ++ show fs ++ ";" ]
 
 inlineMarkdown :: String -> ContentNode
-inlineMarkdown = Text . Regex.subRegexPR "\\*(.+?)\\*" "<i>\\1</i>"
-                      . Regex.subRegexPR "_(.+?)_" "<i>\\1</i>"
-                      . Regex.subRegexPR "\\*\\*(.+?)\\*\\*" "<b>\\1</b>"
-                      . Regex.subRegexPR "__(.+?)__" "<b>\\1</b>"
+inlineMarkdown = Text . Regex.gsubRegexPR "\\*(.+?)\\*" "<i>\\1</i>"
+                      . Regex.gsubRegexPR "_(.+?)_" "<i>\\1</i>"
+                      . Regex.gsubRegexPR "\\*\\*(.+?)\\*\\*" "<b>\\1</b>"
+                      . Regex.gsubRegexPR "__(.+?)__" "<b>\\1</b>"
 
 instance IsString ContentNode where
     fromString = inlineMarkdown

@@ -20,6 +20,8 @@ data    ContentNode  = Header Int String | List [ContentNode] | Text String | Br
                      | RawSVG Int Int String | Diagram Int (Diagram SVG)
                      | UnfoldList Eagerness [ContentNode]
                      | Sequence Eagerness [ContentNode]
+                     | ConcatList [ContentNode]
+                     | UnfoldConcatList Eagerness [ContentNode]
 
 data    Style        = Style { selectors :: [(Selector, ElementStyle)]
                              , baseCss   :: String }
