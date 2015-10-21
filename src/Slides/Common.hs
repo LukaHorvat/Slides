@@ -19,46 +19,46 @@ data Eagerness
     | Immediate
     deriving (Eq, Show)
 
--- | The outmost type. Holds slides and styling.
+-- | The outermost type. Holds slides and styling.
 data Presentation = Presentation { slides   :: [Slide]
                                  , style    :: Style
-                                 -- | A plain string that will be put into the <head> before everything else.
+                                 -- | A plain string that will be put into the \<head> before everything else.
                                  , baseHead :: String }
 
--- | The outmost type of a single slide. Holds content nodes.
+-- | The outermost type of a single slide. Holds content nodes.
 newtype Slide  = Slide { nodes :: [ContentNode] }
 
 -- | The main type in the presentaion. Describes all the possible kinds of content.
 data ContentNode
-    -- | Generates a <hN> tag where the N is the first argument.
+    -- | Generates a \<hN> tag where the N is the first argument.
     = Header Int String
     -- | Generates an unordered list that's immediately displayed.
     | List [ContentNode]
     -- | A plain text node.
     | Text String
-    -- | Generates a <br /> tag. A new line.
+    -- | Generates a \<br /> tag. A new line.
     | Break
-    -- | Generates a SVG tag with the specified width and height and string contents.
+    -- | Generates an SVG tag with the specified width and height and string contents.
     | RawSVG Int Int String
-    -- | Generates a SVG element from a given height and a Diagram
+    -- | Generates an SVG tag from a given height and a Diagram
     | Diagram Int (Diagram SVG)
     -- | Generates a list of elements where each element is delayed. The Eagerness parameter
-    -- | determines whether the list will immediately display the first element.
+    --   determines whether the list will immediately display the first element.
     | UnfoldList Eagerness [ContentNode]
     -- | Generates elements in sequence with the next one REPLACING the previous one. The Eagerness
-    -- | parameter determines whether the first element in sequence will be immediately displayed.
+    --   parameter determines whether the first element in sequence will be immediately displayed.
     | Sequence Eagerness [ContentNode]
     -- | Generates a 'list' of elements. The elements themselves are not wrapped in anything,
-    -- | unlike in a normal list where they're wrapped in <li> tags, just concatinated together.
+    --   unlike in a normal list where they're wrapped in \<li> tags, just concatinated together.
     | ConcatList [ContentNode]
     -- | The same as ConcatList with the display behavior of UnfoldList
     | UnfoldConcatList Eagerness [ContentNode]
 
--- | Rudamentary support for styling
+-- | Rudimentary support for styling
 data Style = Style
-    -- | Pairs of selectors that determine what kind of elements to apply the style to and the
-    -- | styles themselves.
-    { selectors :: [(Selector, ElementStyle)]
+    { -- | Pairs of selectors that determine what kind of elements to apply the style to and the
+      -- | styles themselves.
+      selectors :: [(Selector, ElementStyle)]
     , baseCss   :: String }
     deriving (Eq, Show, Read)
 

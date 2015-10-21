@@ -1,4 +1,10 @@
 {-# LANGUAGE RecordWildCards, OverloadedStrings #-}
+-- | To use this package you need to construct a Presentation tree using the types and constructors
+--   from the Slides.Common module (re-exported from this one). Then call one of the functions
+--   bellow.
+--   The generated HTML will not look like a presentation when you open it up in a browser, but
+--   it has CSS guides in place that will split it up into pages property when you print it.
+--   Good default settings are A3-Landscape. You can just print to PDF to get the actual presentation.
 module Slides.Presentation
     ( renderPresentation, writeToFile, module Slides.Common
     ) where
@@ -54,10 +60,10 @@ inlineMarkdown = Text . Regex.gsubRegexPR "\\*(.+?)\\*" "<i>\\1</i>"
 instance IsString ContentNode where
     fromString = inlineMarkdown
 
--- | Render the Presentation to a HTML string.
+-- | Render the Presentation to an HTML string.
 renderPresentation :: Presentation -> String
 renderPresentation = render
 
--- | Render a Presentation to a HTML file with UTF8 encoding.
+-- | Render a Presentation to an HTML file with UTF8 encoding.
 writeToFile :: FilePath -> Presentation -> IO ()
 writeToFile path = UTF8.writeFile path . render
