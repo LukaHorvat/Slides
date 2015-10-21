@@ -13,7 +13,8 @@ import Data.FileEmbed
 
 -- | Describes the behavior of the presentation element.
 data Eagerness
-    -- | The element won't be displayed until there's an explicit signal from the user (pressing the arrow key, etc.)
+    -- | The element won't be displayed until there's an explicit signal from the user (pressing the
+    --   arrow key, etc.)
     = Delay
     -- | The element will be displayed as soon as it's encountered.
     | Immediate
@@ -22,7 +23,8 @@ data Eagerness
 -- | The outermost type. Holds slides and styling.
 data Presentation = Presentation { slides   :: [Slide]
                                  , style    :: Style
-                                 -- | A plain string that will be put into the \<head> before everything else.
+                                 -- | A plain string that will be put into the \<head> before
+                                 --   everything else.
                                  , baseHead :: String }
 
 -- | The outermost type of a single slide. Holds content nodes.
@@ -42,7 +44,7 @@ data ContentNode
     | RawSVG Int Int String
     -- | Generates an SVG tag from a given height and a Diagram
     | Diagram Int (Diagram SVG)
-    -- | Generates a list of elements where each element is delayed. The Eagerness parameter
+    -- | Generates a list of elements where each element is delayed. The 'Eagerness' parameter
     --   determines whether the list will immediately display the first element.
     | UnfoldList Eagerness [ContentNode]
     -- | Generates elements in sequence with the next one REPLACING the previous one. The Eagerness

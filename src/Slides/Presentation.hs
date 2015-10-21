@@ -1,10 +1,53 @@
 {-# LANGUAGE RecordWildCards, OverloadedStrings #-}
 -- | To use this package you need to construct a Presentation tree using the types and constructors
---   from the Slides.Common module (re-exported from this one). Then call one of the functions
+--   from the 'Slides.Common' module (re-exported from this one). Then call one of the functions
 --   bellow.
 --   The generated HTML will not look like a presentation when you open it up in a browser, but
---   it has CSS guides in place that will split it up into pages property when you print it.
+--   it has CSS guides in place that will split it up into pages properly when you print it.
 --   Good default settings are A3-Landscape. You can just print to PDF to get the actual presentation.
+--
+--   Here's an example
+--
+-- @
+-- sample :: 'Presentation'
+-- sample =
+--     'Presentation' [
+--         'Slide' [
+--             'Header' 2 \"Title\",
+--             'Sequence' 'Immediate' [
+--                 'UnfoldConcatList' 'Delay' [
+--                     'Header' 3 \"Example\",
+--                     'UnfoldList' 'Immediate' [
+--                         \"These lines will unfold one by one.\",
+--                         \"You can use some markdown in these strings like _this_ or *this* \\
+--                         \\or \__this__ or **this**.\"
+--                     ],
+--                     'Diagram' 200 someDiagram
+--                 ],
+--                 'List' [
+--                     \"This list will be shown in place of the previous title-list-diagram.\",
+--                     \"This item will be shown immediately with the last one.\"
+--                 ]
+--             ] -- note that the above title \"Title\" will remain there during the sequence.
+--         ],
+--         'Slide' [
+--             'Header' 2 \"Another slide\",
+--             'List' [
+--                 \"Some text describing stuff.\",
+--                 \"More text.\"
+--             ],
+--             'Sequence' 'Delay' [
+--                 'Diagram' 200 a,
+--                 'Diagram' 200 sequence,
+--                 'Diagram' 200 of,
+--                 'Diagram' 300 diagrams
+--             ]
+--         ]
+--     ]
+ --
+ -- main :: IO ()
+ -- main = writeToFile \"index.html\" sample
+-- @
 module Slides.Presentation
     ( renderPresentation, writeToFile, module Slides.Common
     ) where
