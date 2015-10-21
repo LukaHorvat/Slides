@@ -11,42 +11,45 @@
 -- @
 -- sample :: 'Presentation'
 -- sample =
---     'Presentation' [
---         'Slide' [
---             'Header' 2 \"Title\",
---             'Sequence' 'Immediate' [
---                 'UnfoldConcatList' 'Delay' [
---                     'Header' 3 \"Example\",
---                     'UnfoldList' 'Immediate' [
---                         \"These lines will unfold one by one.\",
---                         \"You can use some markdown in these strings like _this_ or *this* \\
---                         \\or \__this__ or **this**.\"
+--     'emptyPresentation' {
+--         'slides' = [
+--             'Slide' [
+--                 'Header' 2 \"Title\",
+--                 'Sequence' 'Immediate' [
+--                     -- this delay does nothing because the parent 'Immediate' overrides it
+--                     'UnfoldConcatList' 'Delay' [
+--                         'Header' 3 \"Example\",
+--                         'UnfoldList' 'Immediate' [
+--                             \"These lines will unfold one by one.\",
+--                             \"You can use some markdown in these strings like _this_ or *this* \\
+--                             \\or \__this__ or **this**.\"
+--                         ],
+--                         'Diagram' 200 someDiagram
 --                     ],
---                     'Diagram' 200 someDiagram
---                 ],
---                 'List' [
---                     \"This list will be shown in place of the previous title-list-diagram.\",
---                     \"This item will be shown immediately with the last one.\"
---                 ]
---             ] -- note that the above title \"Title\" will remain there during the sequence.
---         ],
---         'Slide' [
---             'Header' 2 \"Another slide\",
---             'List' [
---                 \"Some text describing stuff.\",
---                 \"More text.\"
+--                     'List' [
+--                         \"This list will be shown in place of the previous title-list-diagram.\",
+--                         \"This item will be shown immediately with the last one.\"
+--                     ]
+--                 ] -- note that the above title \"Title\" will remain there during the sequence.
 --             ],
---             'Sequence' 'Delay' [
---                 'Diagram' 200 a,
---                 'Diagram' 200 sequence,
---                 'Diagram' 200 of,
---                 'Diagram' 300 diagrams
+--             'Slide' [
+--                 'Header' 2 \"Another slide\",
+--                 'List' [
+--                     \"Some text describing stuff.\",
+--                     \"More text.\"
+--                 ],
+--                 'Sequence' 'Delay' [
+--                     'Diagram' 200 a,
+--                     'Diagram' 200 sequence,
+--                     'Diagram' 200 of,
+--                     'Diagram' 300 diagrams
+--                 ]
 --             ]
 --         ]
---     ]
- --
- -- main :: IO ()
- -- main = writeToFile \"index.html\" sample
+--     }
+--
+-- main :: IO ()
+-- main = 'writeToFile' \"index.html\" sample
 -- @
 module Slides.Presentation
     ( renderPresentation, writeToFile, module Slides.Common
