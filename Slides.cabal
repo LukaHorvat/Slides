@@ -1,5 +1,5 @@
 name:                Slides
-version:             0.1.0.5
+version:             0.1.0.6
 synopsis:            Generate slides from Haskell code
 description:         Make presentations in Haskell with diagrams
 license:             MIT
