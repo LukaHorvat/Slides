@@ -65,7 +65,7 @@ import Data.Maybe (catMaybes)
 import Slides.Common
 import Slides.Sequencing
 import Slides.Internal
-import System.IO (openFile, utf8, hSetEncoding, hPutStr, IOMode(WriteMode), hFlush)
+import System.IO (openFile, utf8, hSetEncoding, hPutStr, IOMode(WriteMode), hFlush, hClose)
 
 class Renderable a where
     render :: a -> String
@@ -109,3 +109,4 @@ writeToFile path pres = do
     hSetEncoding file utf8
     hPutStr file (render pres)
     hFlush file
+    hClose file
