@@ -65,6 +65,7 @@ import Data.Maybe (catMaybes)
 import Slides.Common
 import Slides.Sequencing
 import Slides.Internal
+import System.IO (openFile, utf8, hSetEncoding, hPutStr, IOMode(WriteMode), hFlush)
 
 class Renderable a where
     render :: a -> String
@@ -103,4 +104,8 @@ renderPresentation = render
 
 -- | Render a Presentation to an HTML file with UTF8 encoding.
 writeToFile :: FilePath -> Presentation -> IO ()
-writeToFile path = writeFile path . render
+writeToFile path pres = do
+    file <- openFile path WriteMode
+    hSetEncoding file utf8
+    hPutStr file (render pres)
+    hFlush file

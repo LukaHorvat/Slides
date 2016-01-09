@@ -20,7 +20,8 @@ sample =
                         UnfoldList Immediate [
                             "These lines will unfold one by one.",
                             "You can use some markdown in these strings like _this_ or *this* \
-                            \or __this__ or **this**."
+                            \or __this__ or **this**.",
+                            "unicodešđčćž"
                         ]
                     ],
                     List [
