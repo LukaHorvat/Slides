@@ -1,7 +1,11 @@
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings, TemplateHaskell #-}
 module Main where
 
 import Slides.Presentation
+import Data.FileEmbed
+
+index :: String
+index = $(embedStringFile "test/index.html")
 
 sample :: Presentation
 sample =
@@ -36,4 +40,5 @@ sample =
     }
 
 main :: IO ()
-main = writeToFile "index.html" sample
+main = if renderPresentation sample == index then putStrLn "Test passed."
+                                             else putStrLn "Test failed."
