@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveFunctor #-}
 module Slides.Sequencing where
 
-import Slides.Common
+import Slides.Common hiding (nodes)
 import Slides.Internal
 
 data StepF a = Step Eagerness a deriving (Functor, Show)

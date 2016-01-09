@@ -60,15 +60,11 @@ module Slides.Presentation
     ( renderPresentation, writeToFile, module Slides.Common
     ) where
 
-import Data.Colour (Colour)
 import qualified Data.Colour.SRGB as Colour
 import Data.Maybe (catMaybes)
-import Data.String (IsString(..))
-import Data.List (groupBy)
 import Slides.Common
 import Slides.Sequencing
 import Slides.Internal
-import Text.Regex.Applicative (replace, few, anySym)
 
 class Renderable a where
     render :: a -> String
@@ -100,18 +96,6 @@ instance Renderable ElementStyle where
         [ backgroundColor $> \col -> "background-color: " ++ Colour.sRGB24show col ++ ";\n"
         , fontFamily $> \ff -> "font-family: " ++ ff ++ ";\n"
         , fontSize $> \fs -> "font-size: " ++ show fs ++ ";" ]
-
-wrapIn :: String -> String -> String
-wrapIn tag str = "<" ++ tag ++ ">" ++ str ++ "</" ++ tag ++ ">"
-
-inlineMarkdown :: String -> ContentNode
-inlineMarkdown = Text . replace (wrapIn "i" <$> ("*" *> few anySym <* "*"))
-                      . replace (wrapIn "i" <$> ("_" *> few anySym <* "_"))
-                      . replace (wrapIn "b" <$> ("**" *> few anySym <* "**"))
-                      . replace (wrapIn "b" <$> ("__" *> few anySym <* "__"))
-
-instance IsString ContentNode where
-    fromString = inlineMarkdown
 
 -- | Render the Presentation to an HTML string.
 renderPresentation :: Presentation -> String

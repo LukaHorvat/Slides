@@ -18,7 +18,7 @@ htmlCustom tag att content = "<" ++ tag ++ " " ++ att ++ ">" ++ content ++ "</" 
 
 dropAllButSvg :: String -> String
 dropAllButSvg ('<' : 's' : 'v' : 'g' : rest) = "<svg" ++ rest
-dropAllButSvg (x : xs) = dropAllButSvg xs
+dropAllButSvg (_ : xs) = dropAllButSvg xs
 dropAllButSvg _        = error "No <svg> tag"
 
 svgFromDiagram :: Int -> Diagram SVG -> String
@@ -32,5 +32,6 @@ renderLeafContent (Text str)   = str
 renderLeafContent (RawSVG width height str) = htmlCustom "svg" (w ++ " " ++ h) str
     where w = "width=\"" ++ show width ++ "px\""
           h = "height=\"" ++ show height ++ "px\""
-renderLeafContent Break        = "<br />"
+renderLeafContent Break         = "<br />"
 renderLeafContent (Diagram h d) = svgFromDiagram h d
+renderLeafContent _             = error "Non-leaf node given to renderLeafContent"

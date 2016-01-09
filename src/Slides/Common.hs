@@ -1,4 +1,4 @@
-{-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TemplateHaskell, OverloadedStrings #-}
 module Slides.Common
     ( Eagerness(..), Presentation(..), Slide(..), ContentNode(..), Style(..)
     , Selector(..), ElementStyle(..), emptyPresentation, emptyStyle, emptyElementStyle
@@ -6,10 +6,10 @@ module Slides.Common
 
 import Diagrams (Diagram)
 import Diagrams.Backend.SVG (SVG(..))
-import qualified Diagrams as Diag
-import qualified Diagrams.Backend.SVG as SVG
 import Data.Colour (Colour)
 import Data.FileEmbed
+import Data.String (IsString(..))
+import Text.Regex.Applicative (replace, few, anySym)
 
 -- | Describes the behavior of the presentation element.
 data Eagerness
@@ -89,3 +89,15 @@ emptyStyle = Style [] $(embedStringFile "assets/default.css")
 -- | Completely empty element style.
 emptyElementStyle :: ElementStyle
 emptyElementStyle = ElementStyle Nothing Nothing Nothing
+
+wrapIn :: String -> String -> String
+wrapIn tag str = "<" ++ tag ++ ">" ++ str ++ "</" ++ tag ++ ">"
+
+inlineMarkdown :: String -> ContentNode
+inlineMarkdown = Text . replace (wrapIn "i" <$> ("*" *> few anySym <* "*"))
+                      . replace (wrapIn "i" <$> ("_" *> few anySym <* "_"))
+                      . replace (wrapIn "b" <$> ("**" *> few anySym <* "**"))
+                      . replace (wrapIn "b" <$> ("__" *> few anySym <* "__"))
+
+instance IsString ContentNode where
+    fromString = inlineMarkdown
