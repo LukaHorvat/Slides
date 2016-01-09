@@ -9,6 +9,7 @@
 --   Here's an example
 --
 -- @
+-- {-# LANGUAGE OverloadedStrings #-}
 -- sample :: 'Presentation'
 -- sample =
 --     'emptyPresentation' {
@@ -62,13 +63,12 @@ module Slides.Presentation
 import Data.Colour (Colour)
 import qualified Data.Colour.SRGB as Colour
 import Data.Maybe (catMaybes)
-import qualified Text.RegexPR as Regex
 import Data.String (IsString(..))
 import Data.List (groupBy)
 import Slides.Common
 import Slides.Sequencing
 import Slides.Internal
-import qualified System.IO.UTF8 as UTF8
+import Text.Regex.Applicative (replace, few, anySym)
 
 class Renderable a where
     render :: a -> String
@@ -101,11 +101,14 @@ instance Renderable ElementStyle where
         , fontFamily $> \ff -> "font-family: " ++ ff ++ ";\n"
         , fontSize $> \fs -> "font-size: " ++ show fs ++ ";" ]
 
+wrapIn :: String -> String -> String
+wrapIn tag str = "<" ++ tag ++ ">" ++ str ++ "</" ++ tag ++ ">"
+
 inlineMarkdown :: String -> ContentNode
-inlineMarkdown = Text . Regex.gsubRegexPR "\\*(.+?)\\*" "<i>\\1</i>"
-                      . Regex.gsubRegexPR "_(.+?)_" "<i>\\1</i>"
-                      . Regex.gsubRegexPR "\\*\\*(.+?)\\*\\*" "<b>\\1</b>"
-                      . Regex.gsubRegexPR "__(.+?)__" "<b>\\1</b>"
+inlineMarkdown = Text . replace (wrapIn "i" <$> ("*" *> few anySym <* "*"))
+                      . replace (wrapIn "i" <$> ("_" *> few anySym <* "_"))
+                      . replace (wrapIn "b" <$> ("**" *> few anySym <* "**"))
+                      . replace (wrapIn "b" <$> ("__" *> few anySym <* "__"))
 
 instance IsString ContentNode where
     fromString = inlineMarkdown
@@ -116,4 +119,4 @@ renderPresentation = render
 
 -- | Render a Presentation to an HTML file with UTF8 encoding.
 writeToFile :: FilePath -> Presentation -> IO ()
-writeToFile path = UTF8.writeFile path . render
+writeToFile path = writeFile path . render
