@@ -1,5 +1,5 @@
 name:                Slides
-version:             0.1.0.8
+version:             0.1.0.9
 synopsis:            Generate slides from Haskell code
 description:         Make presentations in Haskell with diagrams
 license:             MIT
@@ -21,12 +21,12 @@ library
                      , Slides.Common
   other-modules:       Slides.Sequencing
                      , Slides.Internal
-  build-depends:       base >=4.8 && <4.9
-                     , diagrams-svg == 1.3.*
+  build-depends:       base >=4.8 && < 5
+                     , diagrams-svg >= 1.4 && < 1.5
                      , colour == 2.3.*
                      , file-embed == 0.0.*
                      , regex-applicative == 0.3.*
-                     , diagrams-lib == 1.3.*
+                     , diagrams-lib >= 1.3 && < 1.4
   ghc-options:         -Wall
   hs-source-dirs:      src
   default-language:    Haskell2010

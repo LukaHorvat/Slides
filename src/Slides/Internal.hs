@@ -24,7 +24,7 @@ dropAllButSvg _        = error "No <svg> tag"
 svgFromDiagram :: Int -> Diagram SVG -> String
 svgFromDiagram h = dropAllButSvg
                  . show
-                 . Diag.renderDia SVG (SVG.SVGOptions (Diag.mkHeight $ fromIntegral h) Nothing "")
+                 . Diag.renderDia SVG (SVG.SVGOptions (Diag.mkHeight $ fromIntegral h) Nothing "" [] True)
 
 renderLeafContent :: ContentNode -> String
 renderLeafContent (Header h s) = html ("h" ++ show h) s
