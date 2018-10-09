@@ -55,7 +55,7 @@
 --
 --
 -- The result is a HTML file which can be printed to PDF and would look like
--- <https://dl.dropboxusercontent.com/u/35032740/ShareX/2015/10/test.pdf this>
+-- <https://www.dropbox.com/s/fhxlgu9cesa0lsh/test.pdf?dl=0 this>
 module Slides.Presentation
     ( renderPresentation, writeToFile, module Slides.Common
     ) where
